@@ -7,6 +7,21 @@ except ImportError:
 
 ##Note: Scrapes words from wordfinder.yourdictionary
 def build_url(letters: int) -> str:
+    dict = {
+        3: 12,
+        4: 46,
+        5: 101,
+        6: 176,
+        7: 262,
+        8: 322,
+        9: 298,
+        10: 253,
+        11: 195,
+        12: 143,
+        13: 99,
+        14: 64,
+        15: 40
+    }
     page_num = 1
     url = f"https://wordfinder.yourdictionary.com/letter-words/{letters}/?page={page_num}"
     return url
