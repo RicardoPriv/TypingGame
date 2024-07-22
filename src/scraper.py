@@ -1,5 +1,6 @@
 try:
     import requests
+    import random
     from bs4 import BeautifulSoup
 except ImportError:
     exit()
@@ -7,7 +8,7 @@ except ImportError:
 
 ##Note: Scrapes words from wordfinder.yourdictionary
 def build_url(letters: int) -> str:
-    dict = {
+    dict_pages = {
         3: 12,
         4: 46,
         5: 101,
@@ -22,9 +23,8 @@ def build_url(letters: int) -> str:
         14: 64,
         15: 40
     }
-    page_num = 1
-    url = f"https://wordfinder.yourdictionary.com/letter-words/{letters}/?page={page_num}"
-    return url
+    
+    return f"https://wordfinder.yourdictionary.com/letter-words/{letters}/?page={random.randint(1, dict_pages[letters])}"
 
 def scrape_words(letters: int) -> str:
     url = build_url(letters)
