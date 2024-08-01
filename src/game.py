@@ -1,17 +1,12 @@
 try:
-    import tkinter as tk
+    import time
+    from setup import start
 except ImportError:
     exit()
-    
-from setup import start_game
-from scraper import scrape_words
 
 def main():
-    root = start_game()
+    root = start()
     root.mainloop()
 
 if __name__ == "__main__":
     main()
-
-#Token password for pushing
-# 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
