@@ -3,11 +3,15 @@ try:
     import random
     from bs4 import BeautifulSoup
 except ImportError:
-    exit()
+    print("Error with loading packages - Please try again")
+    exit(1)
+
+##Note: This file scrapes words from wordfinder.yourdictionary
 
 
-##Note: Scrapes words from wordfinder.yourdictionary
 def build_url(letters: int) -> str:
+    # Max page lengths per word length
+    # Eg: 12 pages for 3 letter words
     dict_pages = {
         3: 12,
         4: 46,
@@ -23,7 +27,7 @@ def build_url(letters: int) -> str:
         14: 64,
         15: 40
     }
-    
+
     return f"https://wordfinder.yourdictionary.com/letter-words/{letters}/?page={random.randint(1, dict_pages[letters])}"
 
 def scrape_words(letters: int) -> str:
@@ -38,13 +42,13 @@ def scrape_words(letters: int) -> str:
         soup = BeautifulSoup(response.text, 'html.parser')
         words = []
 
-        #pulls the table with words
+        # Pulls the table with words from webpage
         table = soup.find('table', class_='table')
         
-        #pulls the rows
+        # Pulls the rows from table
         rows = table.find_all('tr')
 
-        #pulls the data from the rows
+        # Pulls the data from the rows
         for row in rows:
             row_data = row.find_all('td')
             indiv_data = [data.text.strip() for data in row_data]
@@ -54,4 +58,5 @@ def scrape_words(letters: int) -> str:
         return words
     else:
         print(f"Failed to retrieve data from {url}")
-        return []
+        print(f"Please check connection and try again")
+        exit(1)

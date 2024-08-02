@@ -1,0 +1,18 @@
+Overview
+
+Welcome to the Typing Game! In this game, you'll be shown a random word that you need to type and submit correctly. You have three lives to start with, and you gain one life every level. For each incorrect word you type, you lose a life. Your score increases based on the length of the word typed correctly.
+
+Controls
+	Tab: Pause and resume the game.
+	S: Start the game from the start screen.
+	Enter: Submit the word when focused on the text box.
+	Esc: Close the application at any point.
+	Q: Close the application from the start screen or game over screen.
+
+Gameplay
+	Lives: Start with 3 lives. Lose a life for every incorrect word typed.
+	Score: Gain points based on the length of the correctly typed word. For example, typing a 3-letter word earns 3 points.
+	Levels: There are 12 levels. The game starts with 3-letter words and progresses to 15-letter words.
+	Word List: The words will increase in length and difficulty as you advance through the levels.
+	
+Note: Submit button doesn't function, use enter key instead :)

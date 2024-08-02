@@ -1,12 +1,11 @@
 try:
     import tkinter as tk
-    import random
 except ImportError:
-    exit()
-
+    print("Error with loading packages - Please try again")
+    exit(1)
+    
 
 def start_screen(root: tk):
-    destroy_widgets(root)
     root.geometry("800x600")
     root.resizable(True, True)
     root.config(bg='lightblue')
@@ -23,7 +22,6 @@ def start_screen(root: tk):
     start_subtitle = tk.Label(root, text="Prepare your fingers for a typing challenge!", font=("Helvetica", 18), bg='lightblue')
     start_subtitle.pack(pady=20)
     
-
 def main_screen(root: tk):
     root.title("Typing Game")
     root.geometry("800x600")
@@ -67,8 +65,6 @@ def main_screen(root: tk):
     root.timer_label = tk.Label(root, text="00:00", font=("Helvetica", 14), bg='lightblue')
     root.timer_label.place(relx=1.0, rely=0.0, anchor='ne')
 
-    
-
 def game_over(root: tk):
     root.title("Game Over")
     root.geometry("800x600")
@@ -88,16 +84,17 @@ def game_over(root: tk):
 
     root.game_running = False
     
-
 def pause_screen(root: tk):
     root.title("Game Paused")
     root.geometry("800x600")
     root.resizable(True, True)
     root.config(bg='grey')
 
+    # Display pause message
     pause_label = tk.Label(root, text="Game Paused", font=("Helvetica", 24, "bold"), bg='grey')
     pause_label.pack(pady=200)
 
+    # Display how to resume
     info_label = tk.Label(root, text="Press Tab to Resume", font=("Helvetica", 14), bg='grey')
     info_label.pack(pady=20)
 

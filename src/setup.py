@@ -6,16 +6,21 @@ try:
     from scraper import scrape_words
     from screens import *
 except ImportError:
-    exit()
+    print("Error with loading packages - Please try again")
+    exit(1)
 
+
+# Initialising the game
 def start() -> tk:
     root = tk.Tk()
     root.game_running = False
 
+    destroy_widgets(root)
     start_screen(root)
     function_bindings(root)
     return root
 
+# Defining the game variables
 def game_variables(root: tk):
     root.words = scrape_words(3)
     root.correct_word = random.choice(root.words)
@@ -27,6 +32,7 @@ def game_variables(root: tk):
     root.updating_level = threading.Event()
     root.game_running = True
 
+# Sets and updates the timer for the game
 def update_timer(root: tk.Tk):
     if not root.game_running:
         return False
@@ -43,7 +49,7 @@ def update_timer(root: tk.Tk):
     root.timer_label.config(text=time_string)
     root.after(10, update_timer, root)
     
-
+# Updates when the player progresses to the next level
 def new_level(root: tk.Tk):
     root.label.config(text="Loading next level...", font=("Helvetica", 18), bg='lightblue')
     root.update_idletasks()
@@ -65,6 +71,8 @@ def new_level(root: tk.Tk):
     root.updating_level.set()  # Set the event to indicate level update
     threading.Thread(target=update_words).start()
     
+# Action when return key is pressed
+# Occurs when focused on the textbox for ease of submitting written word
 def on_return_press(event, root):
     if root.updating_level.is_set() or not root.game_running:
         return
@@ -95,10 +103,11 @@ def on_return_press(event, root):
             destroy_widgets(root)
             game_over(root)
     
-
-def on_escape_press(event, root):
+# Updates when escape key is pressed
+def on_escape_press(root):
     root.destroy()
 
+# Updates when s pressed to start the game
 def on_game_start(root: tk):
     if root.game_running:
         return
@@ -108,6 +117,7 @@ def on_game_start(root: tk):
     main_screen(root)
     update_timer(root)
 
+# Updates when tab is pressed
 def on_tab_pause(root: tk):
     if root.game_running or root.title() == "Game Paused":
         destroy_widgets(root)
@@ -120,9 +130,15 @@ def on_tab_pause(root: tk):
             root.game_running = True
             update_timer(root)
 
+# Occurs when player presses q at possible screens
+def on_q_press(root):
+    if not root.game_running and not root.title() == "Game Paused":
+        root.destroy()
+
+# Sets the keybindings and their relevant functions for the game
 def function_bindings(root: tk):
     root.bind("<Return>", lambda event: on_return_press(event, root))
-    root.bind("<Escape>", lambda event: on_escape_press(event, root))
+    root.bind("<Escape>", lambda event: on_escape_press(root))
     root.bind("<Key-s>", lambda event: on_game_start(root))
-    root.bind("<Key-q>", lambda event: root.destroy())
+    root.bind("<Key-q>", lambda event: on_q_press(root))
     root.bind("<Key-Tab>", lambda event: on_tab_pause(root))

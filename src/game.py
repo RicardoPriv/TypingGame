@@ -1,8 +1,9 @@
 try:
-    import time
     from setup import start
 except ImportError:
-    exit()
+    print("Error with loading packages - Please try again")
+    exit(1)
+
 
 def main():
     root = start()
